@@ -2,12 +2,12 @@
 
 * Background
 
-This project is inspired by deno-bridge. deno-bridge provides a great idea to create websocket connection between emacs and deno, making emacs communicate with deno.
+This project is inspired by deno-bridge. Deno-bridge provides a great idea to create a WebSocket connection between emacs and deno, making emacs communicate with deno.
 
-But when I write emacs plugins, I need python package to provide some ability. So I try to transplant deno-bridge to python.
+But when I write emacs plugins, I need a python package to provide some ability. So I try to transplant deno-bridge to python.
 
-When I try to implement 'python-bridge', I think I could make it more general as 'websocket-bridge'.
+When I try to implement /python-bridge/, I think I could make it more general as /websocket-bridge/.
 
 * Theory
 
-Emacs uses emacs-websocket to create a websocket server; other language extensions make websocket clients connect the emacs server. So emacs can communicate with other languages' programs. 
+Emacs uses emacs-websocket to create a WebSocket server; other language extensions make WebSocket clients connect to the emacs server. So emacs can communicate with other languages' programs. 
