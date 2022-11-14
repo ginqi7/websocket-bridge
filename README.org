@@ -2,7 +2,7 @@
 
 * Background
 
-This project is inspired by deno-bridge. Deno-bridge provides a great idea to create a WebSocket connection between emacs and deno, making emacs communicate with deno.
+This project is inspired by [[https://github.com/manateelazycat/deno-bridge][deno-bridge]]. Deno-bridge provides a great idea to create a WebSocket connection between emacs and deno, making emacs communicate with deno.
 
 But when I write emacs plugins, I need a python package to provide some ability. So I try to transplant deno-bridge to python.
 
@@ -11,3 +11,42 @@ When I try to implement /python-bridge/, I think I could make it more general as
 * Theory
 
 Emacs uses emacs-websocket to create a WebSocket server; other language extensions make WebSocket clients connect to the emacs server. So emacs can communicate with other languages' programs. 
+
+* Install
+
+** Download websocket-bridge
+#+begin_src shell
+  git clone --depth=1 -b main https://github.com/ginqi7/websocket-bridge ~/.emacs.d/site-lisp/websocket-bridge/
+#+end_src
+
+** Install Dependences
+[[https://github.com/ahyatt/emacs-websocket][emacs-websocket]]
+
+** Add to ~/.emacs
+From here on, you can add the full path to the websocket-bridge installation directory to your Emacs load-path, then add the following to init.el:
+#+begin_src emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/site-lisp/webscoket-bridge/")
+(require webscoket-bridge)
+#+end_src
+
+* Example
+
+I write a demo to show you how simple write app base on websocket-brige:
+
+** Elisp (websocket-bridge-demo.el)
+#+begin_src emacs-lisp
+  (require 'websocket-bridge)
+  (setq websocket-bridge-demo-py-path (concat (file-name-directory load-file-name) "websocket-bridge-demo.py"))
+  (websocket-bridge-start "demo" websocket-bridge-demo-py-path)
+  (websocket-bridge-call "demo" "ping" "Hello from Emacs.")
+#+end_src
+
+Start client process: ~(websocket-bridge-app-start "demo" "python" deno-bridge-demo-py-path)~
+Call TypeScript function from Emacs: ~(websocket-bridge-call "demo" "ping" "Hello from Emacs.")~
+Clean Deno process: execute command ~websocket-bridge-app-exit~ and select application name
+
+** Python (websocket-bridge-demo.py)
+
+
+** Other
+
