@@ -25,8 +25,8 @@ Emacs uses emacs-websocket to create a WebSocket server; other language extensio
 ** Add to ~/.emacs
 From here on, you can add the full path to the websocket-bridge installation directory to your Emacs load-path, then add the following to init.el:
 #+begin_src emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/site-lisp/webscoket-bridge/")
-(require webscoket-bridge)
+(add-to-list 'load-path "~/.emacs.d/site-lisp/websocket-bridge/")
+(require 'websocket-bridge)
 #+end_src
 
 * Example
