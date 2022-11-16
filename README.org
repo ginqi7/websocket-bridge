@@ -46,7 +46,22 @@ Call TypeScript function from Emacs: ~(websocket-bridge-call "demo" "ping" "Hell
 Clean Deno process: execute command ~websocket-bridge-app-exit~ and select application name
 
 ** Python (websocket-bridge-demo.py)
+#+begin_src python
+  import websocket_bridge_python
 
+  async def on_message(message): 
+      info = json.loads(message)
+      [func_name, func_args] = info[1]
+      if (func_name == "ping"): 
+          print("Emacs message: ", func_args)
+          emacsVar = await bridge.get_emacs_var("websocket-bridge-app-list")
+          print("Emacs var 'websocket-bridge-app-list': ", emacs_var)
+          bridge.message_to_emacs("Hi from Python")
+          bridge.eval_in_emacs('(message \"Eval from Python\")')
+
+  bridge = websocket_bridge_python.bridge_app_regist(on_message) # regist message handle function
+  asyncio.run(bridge.start()))
+#+end_src
 
 ** Other
 
