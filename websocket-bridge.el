@@ -166,5 +166,8 @@
     (when app-process-buffer
       (switch-to-buffer app-process-buffer))))
 
+;; Default start websocket-bridge-server
+(websocket-bridge-server-start)
+
 (provide 'websocket-bridge)
 ;;; websocket-bridge.el ends here
