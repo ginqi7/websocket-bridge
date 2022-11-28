@@ -93,7 +93,7 @@
     (let* ((process
             (intern (format "websocket-bridge-process-%s" app-name)))
            (process-buffer
-            (format "*websocket-bridge-app-%s*" app-name)))
+            (format " *websocket-bridge-app-%s*" app-name)))
       (progn
         ;; Start process.
         (setq process (start-process
@@ -143,7 +143,7 @@
                   (intern-soft
                    (format "websocket-bridge-process-%s" app-name)))
                  (process-buffer
-                  (format "*websocket-bridge-app-%s*" app-name)))
+                  (format " *websocket-bridge-app-%s*" app-name)))
             (when process
               (kill-buffer process-buffer)
               (makunbound process))
@@ -165,7 +165,7 @@
 (defun websocket-bridge-app-open-buffer (app-name)
   "Open buffer for websocket-bridge-app APP-NAME if exists."
   (let ((app-process-buffer
-         (get-buffer (format "*websocket-bridge-app-%s*" app-name))))
+         (get-buffer (format " *websocket-bridge-app-%s*" app-name))))
     (when app-process-buffer
       (switch-to-buffer app-process-buffer)
       (special-mode))))
