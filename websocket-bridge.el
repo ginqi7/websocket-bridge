@@ -170,6 +170,14 @@
       (switch-to-buffer app-process-buffer)
       (special-mode))))
 
+(defun websocket-bridge-app-log-buffer ()
+  "Interactively select an websocket-bridge app and open the log."
+  (interactive)
+  (let ((app-name (completing-read "Select websocket bridge app: " websocket-bridge-app-list)))
+    (when (member app-name websocket-bridge-app-list)
+      (when)
+      (websocket-bridge-app-open-buffer app-name))))
+
 ;; Default start websocket-bridge-server
 (websocket-bridge-server-start)
 
