@@ -175,7 +175,6 @@
   (interactive)
   (let ((app-name (completing-read "Select websocket bridge app: " websocket-bridge-app-list)))
     (when (member app-name websocket-bridge-app-list)
-      (when)
       (websocket-bridge-app-open-buffer app-name))))
 
 ;; Default start websocket-bridge-server
