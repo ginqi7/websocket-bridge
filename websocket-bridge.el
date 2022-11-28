@@ -24,16 +24,11 @@
 
 ;;; Code:
 
-;;; Require
 (require 'websocket)
 (require 'ansi-color)
 
-;;; Code:
-
 (defvar websocket-bridge-app-list (list))
-
 (defvar websocket-bridge-server nil)
-
 (defvar websocket-bridge-server-port nil)
 
 (defun websocket-bridge-get-free-port ()
@@ -72,7 +67,6 @@
                              (eval
                               (read (gethash "content" info nil)))))))))
 
-
 (defun websocket-bridge-server-start ()
   (interactive)
   (if websocket-bridge-server
@@ -87,8 +81,8 @@
         :host 'local
         :on-message #'websocket-bridge-message-handler
         :on-close (lambda (_websocket))))
-      (message
-       (format "[WebsocketBridge] Server start %s" websocket-bridge-server)))))
+      (message (format "[WebsocketBridge] Server start %s"
+                       websocket-bridge-server)))))
 
 (defun websocket-bridge-app-start (app-name command extension-path)
   (if (member app-name websocket-bridge-app-list)
@@ -100,8 +94,13 @@
       (progn
 
         ;; Start process.
-        (setq process
-              (start-process app-name process-buffer command extension-path app-name websocket-bridge-server-port))
+        (setq process (start-process
+                       app-name
+                       process-buffer
+                       command
+                       extension-path
+                       app-name
+                       websocket-bridge-server-port))
         ;; Make sure ANSI color render correctly.
         (set-process-sentinel
          process
@@ -133,7 +132,8 @@
     (let* ((app-name
             (if (member app-name websocket-bridge-app-list)
                 app-name
-              (completing-read "[WebsocketBridge] Exit application: " websocket-bridge-app-list))))
+              (completing-read "[WebsocketBridge] Exit application: "
+                               websocket-bridge-app-list))))
       (if (member app-name websocket-bridge-app-list)
           (let* ((process
                   (intern-soft
