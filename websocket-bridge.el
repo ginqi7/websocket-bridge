@@ -32,8 +32,9 @@
 (defvar websocket-bridge-server-port nil)
 
 (defun websocket-bridge-get-free-port ()
+  "Randomly get port."
   (save-excursion
-    (let* ((process-buffer " *temp*")
+    (let* ((process-buffer "*temp*")
            (process
             (make-network-process
              :name process-buffer
@@ -49,7 +50,7 @@
       (format "%s" (cadr port)))))
 
 (defun websocket-bridge-message-handler (_websocket frame)
-
+  "Message handler for given FRAME."
   (let* ((info (json-parse-string (websocket-frame-text frame)))
          (info-type (gethash "type" info nil)))
     (pcase info-type
@@ -68,6 +69,7 @@
                               (read (gethash "content" info nil)))))))))
 
 (defun websocket-bridge-server-start ()
+  "Start websocket bridge server."
   (interactive)
   (if websocket-bridge-server
       (message "[WebsocketBridge] Server has start.")
@@ -85,14 +87,14 @@
                        websocket-bridge-server)))))
 
 (defun websocket-bridge-app-start (app-name command extension-path)
+  "Start APP-NAME running COMMAND with args EXTENSION-PATH."
   (if (member app-name websocket-bridge-app-list)
       (message "[WebsocketBridge] Application %s has start." app-name)
     (let* ((process
             (intern (format "websocket-bridge-process-%s" app-name)))
            (process-buffer
-            (format " *websocket-bridge-app-%s*" app-name)))
+            (format "*websocket-bridge-app-%s*" app-name)))
       (progn
-
         ;; Start process.
         (setq process (start-process
                        app-name
@@ -112,6 +114,7 @@
         (add-to-list 'websocket-bridge-app-list app-name t)))))
 
 (defun websocket-bridge-server-exit ()
+  "Exit Websocket Bridge server."
   (interactive)
   (if websocket-bridge-server
       (progn
@@ -122,6 +125,7 @@
     (message "[WebsocketBridge] Server not exist.")))
 
 (defun websocket-bridge-app-exit (&optional app-name)
+  "Exit websocket-bridge-app APP-NAME."
   (interactive)
   (cond
    ((not websocket-bridge-app-list)
@@ -139,12 +143,10 @@
                   (intern-soft
                    (format "websocket-bridge-process-%s" app-name)))
                  (process-buffer
-                  (format " *websocket-bridge-app-%s*" app-name)))
-
+                  (format "*websocket-bridge-app-%s*" app-name)))
             (when process
               (kill-buffer process-buffer)
               (makunbound process))
-
             (setq websocket-bridge-app-list
                   (delete app-name websocket-bridge-app-list))
             (makunbound
@@ -152,7 +154,7 @@
         (message "[WebsocketBridge] Application %s has exited." app-name))))))
 
 (defun websocket-bridge-call (app-name &rest func-args)
-  "Call Websocket function from Emacs."
+  "Call APP-NAME with FUNC-ARGS."
   (if (member app-name websocket-bridge-app-list)
       (websocket-send-text
        (symbol-value
@@ -161,8 +163,9 @@
     (message "[WebsocketBridge] Application %s has exited." app-name)))
 
 (defun websocket-bridge-app-open-buffer (app-name)
+  "Open buffer for websocket-bridge-app APP-NAME if exists."
   (let ((app-process-buffer
-         (get-buffer (format " *websocket-bridge-app-%s*" app-name))))
+         (get-buffer (format "*websocket-bridge-app-%s*" app-name))))
     (when app-process-buffer
       (switch-to-buffer app-process-buffer))))
 
