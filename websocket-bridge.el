@@ -129,7 +129,7 @@
   (interactive)
   (cond
    ((not websocket-bridge-app-list)
-    (message "[WebsocketBridge] There is no Application." app-name))
+    (message "[WebsocketBridge] There is no Application."))
    ((and app-name (not (member app-name websocket-bridge-app-list)))
     (message "[WebsocketBridge] Application %s not exist." app-name))
    (t
@@ -167,7 +167,8 @@
   (let ((app-process-buffer
          (get-buffer (format "*websocket-bridge-app-%s*" app-name))))
     (when app-process-buffer
-      (switch-to-buffer app-process-buffer))))
+      (switch-to-buffer app-process-buffer)
+      (special-mode))))
 
 ;; Default start websocket-bridge-server
 (websocket-bridge-server-start)
