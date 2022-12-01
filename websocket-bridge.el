@@ -167,7 +167,7 @@
   (let ((app-process-buffer
          (get-buffer (format " *websocket-bridge-app-%s*" app-name))))
     (when app-process-buffer
-      (switch-to-buffer app-process-buffer)
+      (pop-to-buffer app-process-buffer)
       (special-mode))))
 
 (defun websocket-bridge-app-log-buffer ()
