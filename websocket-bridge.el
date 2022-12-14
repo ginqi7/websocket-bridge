@@ -83,8 +83,9 @@
         :host 'local
         :on-message #'websocket-bridge-message-handler
         :on-close (lambda (_websocket))))
-      (message (format "[WebsocketBridge] Server start %s"
-                       websocket-bridge-server)))))
+      (message
+       (format "[WebsocketBridge] Server start %s"
+               websocket-bridge-server)))))
 
 (defun websocket-bridge-app-start (app-name command extension-path)
   "Start APP-NAME running COMMAND with args EXTENSION-PATH."
@@ -96,13 +97,15 @@
             (format " *websocket-bridge-app-%s*" app-name)))
       (progn
         ;; Start process.
-        (setq process (start-process
-                       app-name
-                       process-buffer
+        (setq process
+              (start-process-shell-command
+               app-name
+               process-buffer
+               (format "%s %s %s %s"
                        command
                        extension-path
                        app-name
-                       websocket-bridge-server-port))
+                       websocket-bridge-server-port)))
         ;; Make sure ANSI color render correctly.
         (set-process-sentinel
          process
@@ -173,7 +176,8 @@
 (defun websocket-bridge-app-log-buffer ()
   "Interactively select an websocket-bridge app and open the log."
   (interactive)
-  (let ((app-name (completing-read "Select websocket bridge app: " websocket-bridge-app-list)))
+  (let ((app-name
+         (completing-read "Select websocket bridge app: " websocket-bridge-app-list)))
     (when (member app-name websocket-bridge-app-list)
       (websocket-bridge-app-open-buffer app-name))))
 
