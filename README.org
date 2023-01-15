@@ -63,5 +63,28 @@ Clean Deno process: execute command ~websocket-bridge-app-exit~ and select appli
   asyncio.run(bridge.start()))
 #+end_src
 
+** Deno (websocket-bridge-demo.ts)
+#+begin_src typescript
+import { bridgeAppRegist } from "./mod.ts"
+
+const bridge = bridgeAppRegist(onMessage)
+
+async function onMessage(message) {
+    console.log(message)
+    const [funcName, funcArgs] = JSON.parse(message)[1]
+
+    if (funcName == "ping") {
+        console.log("Emacs message: ", funcArgs)
+
+        const emacsVar = await bridge.getEmacsVar("deno-bridge-app-list")
+        console.log("Emacs var 'deno-bridge-app-list': ", emacsVar)
+
+        bridge.messageToEmacs("Hi from TypeScript")
+
+        bridge.evalInEmacs('(message \"Eval from TypeScript\")')
+    }
+}
+#+end_src
+
 ** Other
 
