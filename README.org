@@ -37,7 +37,7 @@ I write a demo to show you how simple write app base on websocket-brige:
 #+begin_src emacs-lisp
   (require 'websocket-bridge)
   (setq websocket-bridge-demo-py-path (concat (file-name-directory load-file-name) "websocket-bridge-demo.py"))
-  (websocket-bridge-start "demo" websocket-bridge-demo-py-path)
+  (websocket-bridge-start "demo" "python" websocket-bridge-demo-py-path)
   (websocket-bridge-call "demo" "ping" "Hello from Emacs.")
 #+end_src
 
