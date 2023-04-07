@@ -51,8 +51,9 @@
 
 (defun websocket-bridge-message-handler (_websocket frame)
   "Message handler for given FRAME."
-  (let* ((info (json-parse-string (websocket-frame-text frame)))
-         (info-type (gethash "type" info nil)))
+  (let* ((info (ignore-errors (json-parse-string (websocket-frame-text frame))))
+         (info-type (when (hash-table-p info)
+                      (gethash "type" info nil))))
     (pcase info-type
       ("client-app-name"
        (set
