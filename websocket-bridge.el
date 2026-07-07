@@ -3,6 +3,7 @@
 ;; Copyright (C) 2022  Qiqi Jin
 
 ;; Author: Qiqi Jin <ginqi7@gmail.com>
+;; Package-Requires: ((websocket) (ansi-color))
 ;; Keywords: lisp
 
 ;; This program is free software; you can redistribute it and/or modify
