@@ -157,8 +157,9 @@
                    (format "websocket-bridge-process-%s" app-name)))
                  (process-buffer
                   (format " *websocket-bridge-app-%s*" app-name)))
+            (when (get-buffer process-buffer)
+              (kill-buffer process-buffer))
             (when process
-              (kill-buffer process-buffer)
               (makunbound process))
             (setq websocket-bridge-app-list
                   (delete app-name websocket-bridge-app-list))
