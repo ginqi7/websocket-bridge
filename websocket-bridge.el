@@ -3,8 +3,10 @@
 ;; Copyright (C) 2022  Qiqi Jin
 
 ;; Author: Qiqi Jin <ginqi7@gmail.com>
-;; Package-Requires: ((websocket) (ansi-color))
-;; Keywords: lisp
+;; Version: 0.0.1
+;; URL: https://github.com/ginqi7/websocket-bridge
+;; Package-Requires: ((emacs "27.1") (websocket "1.13"))
+;; Keywords: lisp, comm, network
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -21,7 +23,13 @@
 
 ;;; Commentary:
 
+;; Bridge Emacs to any program that speaks the WebSocket protocol.
 ;;
+;; Use `websocket-bridge-server-start' to start a local WebSocket server,
+;; `websocket-bridge-app-start' to launch an external program on it, and
+;; `websocket-bridge-call' to call into that program from Elisp.  Messages
+;; arriving from a client are routed to the corresponding handler,
+;; optionally rendered with ANSI color sequences.
 
 ;;; Code:
 
