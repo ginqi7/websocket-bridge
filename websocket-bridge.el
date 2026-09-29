@@ -1,6 +1,6 @@
 ;;; websocket-bridge.el --- Bridge between for websocket and elisp  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022  Qiqi Jin
+;; Copyright (C) 2026  Qiqi Jin
 
 ;; Author: Qiqi Jin <ginqi7@gmail.com>
 ;; Version: 0.0.1
@@ -58,8 +58,8 @@
       (kill-buffer process-buffer)
       (format "%s" (cadr port)))))
 
-(defun websocket-bridge-message-handler (_websocket frame)
-  "Message handler for given FRAME."
+(defun websocket-bridge-message-handler (client frame)
+  "Message handler for the WebSocket CLIENT and FRAME."
   (let* ((info (ignore-errors (json-parse-string (websocket-frame-text frame))))
          (info-type (when (hash-table-p info)
                       (gethash "type" info nil))))
@@ -69,11 +69,11 @@
         (intern
          (format "websocket-bridge-client-%s"
                  (gethash "content" info nil)))
-        _websocket))
+        client))
       ("show-message" (message (gethash "content" info nil)))
       ("eval-code" (eval (read (gethash "content" info nil))))
       ("fetch-var"
-       (websocket-send-text _websocket
+       (websocket-send-text client
                             (json-encode
                              (eval
                               (read (gethash "content" info nil)))))))))
